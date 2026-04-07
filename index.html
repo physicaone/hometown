@@ -99,18 +99,39 @@ section{padding:54px 30px;text-align:center}
   <div class="divider"></div>
   <div class="label">갤러리</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;">
-    <img src="gallery-2.webp" loading="lazy" decoding="async" alt="갤러리 1" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;">
-    <img src="gallery-6.webp" loading="lazy" decoding="async" alt="갤러리 2" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;">
-    <img src="gallery-10.webp" loading="lazy" decoding="async" alt="갤러리 3" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;">
-    <img src="gallery-13.webp" loading="lazy" decoding="async" alt="갤러리 4" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;">
+    <img src="gallery-2.webp" loading="lazy" decoding="async" alt="갤러리 1" onclick="openLightbox(0)" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;cursor:pointer;">
+    <img src="gallery-6.webp" loading="lazy" decoding="async" alt="갤러리 2" onclick="openLightbox(1)" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;cursor:pointer;">
+    <img src="gallery-10.webp" loading="lazy" decoding="async" alt="갤러리 3" onclick="openLightbox(2)" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;cursor:pointer;">
+    <img src="gallery-13.webp" loading="lazy" decoding="async" alt="갤러리 4" onclick="openLightbox(3)" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;cursor:pointer;">
   </div>
 </section>
+
+<div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:2000; justify-content:center; align-items:center; flex-direction:column;">
+  <button onclick="closeLightbox()" style="position:absolute; top:16px; right:16px; background:none; border:none; color:white; font-size:28px; cursor:pointer; z-index:2001;">✕</button>
+  <img id="lightboxImg" src="" style="max-width:92%; max-height:86vh; object-fit:contain; border-radius:6px;">
+</div>
 
 <div class="footer">
   <div class="date">감사한 마음으로 기다리겠습니다</div>
 </div>
 
 <script>
+var galleryImgs=['gallery-2.webp','gallery-6.webp','gallery-10.webp','gallery-13.webp'];
+function openLightbox(i){
+  var lb=document.getElementById('lightbox');
+  var img=document.getElementById('lightboxImg');
+  img.src=galleryImgs[i]||galleryImgs[0];
+  lb.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').style.display='none';
+  document.body.style.overflow='';
+}
+document.getElementById('lightbox').addEventListener('click',function(e){
+  if(e.target.id==='lightbox') closeLightbox();
+});
+
 function copyAccount(num){
   navigator.clipboard.writeText(num).then(function(){
     var msg=document.createElement('div');
