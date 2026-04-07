@@ -46,6 +46,8 @@ section{padding:54px 30px;text-align:center}
 .footer{padding:40px 30px 56px;text-align:center}
 .footer .names{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:2px;color:var(--gold);margin-bottom:10px}
 .footer .date{font-size:13px;color:var(--text-light);letter-spacing:1px}
+.copy-btn{margin-top:8px;padding:8px 16px;border:1px solid var(--gold-light);background:transparent;border-radius:20px;color:var(--text-light);font-family:'Noto Serif KR',serif;font-size:12px;cursor:pointer}
+.copy-btn:active{transform:translateY(1px)}
 </style>
 </head>
 <body>
@@ -85,15 +87,29 @@ section{padding:54px 30px;text-align:center}
   <div class="box">
     <p class="copy"><span class="strong">김흥진</span> · 농협은행</p>
     <p class="copy" style="letter-spacing:0.5px;">352-0005-4189-13</p>
-    <br>
+    <button class="copy-btn" onclick="copyAccount('352-0005-4189-13')">계좌번호 복사하기</button>
+    <br><br>
     <p class="copy"><span class="strong">김순집</span> · 농협은행</p>
     <p class="copy" style="letter-spacing:0.5px;">312-0112-0198-11</p>
+    <button class="copy-btn" onclick="copyAccount('312-0112-0198-11')">계좌번호 복사하기</button>
   </div>
 </section>
 
 <div class="footer">
   <div class="date">감사한 마음으로 기다리겠습니다</div>
 </div>
+
+<script>
+function copyAccount(num){
+  navigator.clipboard.writeText(num).then(function(){
+    var msg=document.createElement('div');
+    msg.textContent='계좌번호가 복사되었습니다';
+    Object.assign(msg.style,{position:'fixed',bottom:'72px',left:'50%',transform:'translateX(-50%)',background:'rgba(44,36,32,0.88)',color:'#fff',padding:'10px 18px',borderRadius:'8px',fontSize:'12px',zIndex:'9999',transition:'opacity .3s'});
+    document.body.appendChild(msg);
+    setTimeout(function(){msg.style.opacity='0';setTimeout(function(){msg.remove();},300);},1500);
+  });
+}
+</script>
 
 </body>
 </html>
